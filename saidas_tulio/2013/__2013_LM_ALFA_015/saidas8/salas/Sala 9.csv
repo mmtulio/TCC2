@@ -1,0 +1,15 @@
+;SEG;TER;QUA;QUI;SEX;
+07h00;;;;;;
+08h00;;;;;;
+09h00;;;;;;
+10h00;;;0 Programacao_I CC 1 EQ 1 THIAGO_MEIRELES_PAIXAO S-40 O-37 ;14 Programacao_II CC 3 CLAYTON_VIEIRA_FRAGA_FILHO S-40 O-30 ;;
+11h00;;;0 Programacao_I CC 1 EQ 1 THIAGO_MEIRELES_PAIXAO S-40 O-37 ;14 Programacao_II CC 3 CLAYTON_VIEIRA_FRAGA_FILHO S-40 O-30 ;;
+13h30;;;25 Gerencia_de_Projeto_de_Software CC 7 CLAYTON_VIEIRA_FRAGA_FILHO S-40 O-20 ;20 Metodos_de_Otimizacao CC 5 GERALDO_REGIS_MAURI S-40 O-20 ;13 Programacao_II CC 3 CLAYTON_VIEIRA_FRAGA_FILHO S-40 O-30 ;
+14h30;;;25 Gerencia_de_Projeto_de_Software CC 7 CLAYTON_VIEIRA_FRAGA_FILHO S-40 O-20 ;20 Metodos_de_Otimizacao CC 5 GERALDO_REGIS_MAURI S-40 O-20 ;13 Programacao_II CC 3 CLAYTON_VIEIRA_FRAGA_FILHO S-40 O-30 ;
+15h30;;;32 Desenvolvimento_de_Sistemas_para_WEB CC 5 CC 7 BRUNO_VILELA_OLIVEIRA S-40 O-20 ;;33 Gerenciamento_de_Banco_de_Dados CC 7 ANTONIO_ALMEIDA_DE_BARROS_JUNIOR S-40 O-20 ;
+16h30;;;32 Desenvolvimento_de_Sistemas_para_WEB CC 5 CC 7 BRUNO_VILELA_OLIVEIRA S-40 O-20 ;;33 Gerenciamento_de_Banco_de_Dados CC 7 ANTONIO_ALMEIDA_DE_BARROS_JUNIOR S-40 O-20 ;
+18h20;59 Interface_Humano-Computador SI 5 SIMONE_DORNELAS_COSTA S-40 O-20 ;89 Introducao_a_informatica MA 1 VALERIA_ALVES_DA_SILVA S-40 O-35 ;66 Seguranca_e_Auditoria_de_Sistemas SI 7 SIMONE_DORNELAS_COSTA S-40 O-20 ;;57 Projeto_de_Sistemas_de_Software SI 5 CLAYTON_VIEIRA_FRAGA_FILHO S-40 O-30 ;
+19h10;59 Interface_Humano-Computador SI 5 SIMONE_DORNELAS_COSTA S-40 O-20 ;89 Introducao_a_informatica MA 1 VALERIA_ALVES_DA_SILVA S-40 O-35 ;66 Seguranca_e_Auditoria_de_Sistemas SI 7 SIMONE_DORNELAS_COSTA S-40 O-20 ;;57 Projeto_de_Sistemas_de_Software SI 5 CLAYTON_VIEIRA_FRAGA_FILHO S-40 O-30 ;
+20h00;88 Introducao_a_informatica MA 1 VALERIA_ALVES_DA_SILVA S-40 O-35 ;53 Otimizacao_Linear SI 5 GERALDO_REGIS_MAURI S-40 O-20 ;50 Banco_de_Dados SI 5 ANTONIO_ALMEIDA_DE_BARROS_JUNIOR S-40 O-30 ;;35 Introducao_a_informatica SI 1 VALERIA_ALVES_DA_SILVA S-40 O-30 ;
+21h00;88 Introducao_a_informatica MA 1 VALERIA_ALVES_DA_SILVA S-40 O-35 ;53 Otimizacao_Linear SI 5 GERALDO_REGIS_MAURI S-40 O-20 ;50 Banco_de_Dados SI 5 ANTONIO_ALMEIDA_DE_BARROS_JUNIOR S-40 O-30 ;;35 Introducao_a_informatica SI 1 VALERIA_ALVES_DA_SILVA S-40 O-30 ;
+21h50;;;;;67 Processamento_Digital_de_Imagens SI 7 THIAGO_MEIRELES_PAIXAO S-40 O-20 ;
