@@ -1,0 +1,74 @@
+% ==============================================================================
+% TCC2 - TULIO MULLER
+% Capítulo 1 - Introdução
+% ==============================================================================
+\chapter{Introdução}
+\label{sec-intro}
+
+%\hl{Texto.}
+
+%\hrulefill
+
+O problema de tabela-horário é um problema de Otimização Combinatória (OC), que deriva do problema de escalonamento e foi definido por \citeonline{wren-1995} como a alocação, submetida a restrições, de eventos em um número limitado de períodos de tempo e locais, de forma a satisfazer, tanto quanto possível, um conjunto de objetivos estabelecidos.
+
+\section{O problema e sua importância}
+\label{sec-intro-problema}
+
+O problema de tabela-horário pode ser aplicado a diversos tipos de situações, entre os quais pode-se citar: escalas de trabalhadores, escalas de condutores de veículos de transporte, escalas de competições esportivas, e tabelas de horário educacionais, sendo este último o foco deste trabalho, por ser um dos mais estudados na área, conforme pode ser observado em \citeonline{schaerf1999survey}.
+
+Os problemas de tabela-horário educacionais abordam, por exemplo, a geração de tabela-horário para escolas de ensino médio e universidades. O problema de tabela-horário de universidades possui diversas formulações. Isso ocorre pois cada instituição de ensino possui diferentes restrições do problema.
+
+A complexidade do Problema de Tabela-Horário de Universidades (PTHU) é uma das maiores da área de otimização combinatória, e aumenta à medida que são adicionadas restrições, ou seja, quanto mais restrições o problema tiver, mais difícil será encontrar uma solução que atenda todas elas. Segundo \citeonline{schaerf1999survey}, esse problema é classificado como NP-completo para grande parte das formulações, isso significa que a solução ótima só pode ser encontrada rapidamente para instâncias muito pequenas, o que não é a realidade da maioria das universidades brasileiras. Desta forma, busca-se minimizar, através de uma solução automática, o esforço manual na geração de tabela-horário, bem como isentar o processo de um possível viés na alocação dos horários, por parte dos docentes envolvidos.
+
+Apesar das diferentes formulações, segundo \citeonline{santos2007programaccao}, os problemas de tabela-horário educacionais possuem uma característica em comum: a separação das restrições em dois grupos, denominados de restrições fortes e restrições fracas. Isso é feito dessa maneira, pois geralmente não é possível encontrar uma solução que atenda todas as restrições impostas.
+
+As restrições fortes são aquelas que não podem ser violadas. Este grupo restringe o conjunto de soluções para impedir situações irreais. Se uma tabela-horário não viola nenhuma restrição forte, ela é considerada uma solução viável.
+
+As restrições fracas são aquelas cuja satisfação é desejável, mas caso não seja possível atendê-las, a solução não é inviabilizada. Essas restrições possuem pesos para refletir sua importância na qualidade da solução.
+
+Este trabalho leva em consideração o PTHU do caso real do Departamento de Computação (DCOMP) do Centro de Ciências Exatas, Naturais e da Saúde (CCENS) da Universidade Federal do Espírito Santo (UFES), no qual foram inicialmente identificadas 15 restrições por \citeonline{mariano2014alns}, e posteriormente adicionadas mais 2 restrições por \citeonline{vital2015grasp}. A seguir, as 17 restrições consideradas neste trabalho são apresentadas.
+
+\begin{itemize}
+    \item Restrições Fortes:
+    \begin{enumerate}
+        \item Conflitos de professor: um professor não poderá ministrar mais de uma disciplina no mesmo dia e horário;
+        \item Conflitos de turmas: uma turma não poderá assistir a mais de uma aula no mesmo dia e horário;
+        \item Conflitos de salas: uma sala de aula não poderá estar reservada para mais de uma disciplina no mesmo dia e horário;
+        \item Aulas fora do turno: uma aula não poderá ser alocada fora do turno da oferta (diurno ou noturno).
+        \item Capacidade da sala: uma turma não poderá ser alocada em uma sala cuja capacidade seja inferior ao número de alunos da turma;
+        \item Tipo incompatível de sala: as aulas não poderão ser alocadas em uma determinada sala que não é compatível ao tipo solicitado, por exemplo, aulas que deveriam ser realizadas em laboratórios e foram alocadas em salas de aula;
+        \item “Disciplinas especiais”: disciplinas com 3 horas aulas semanais deverão ser alocadas nos três primeiros horários do turno diurno, e nos três primeiros ou três últimos horários do turno noturno, permitindo assim que outras disciplinas possam ser alocadas;
+    \end{enumerate}
+    \item Restrições Fracas:
+    \begin{enumerate}[resume]
+		\item Intervalo de trabalho do professor: o intervalo entre o primeiro e o último dia da semana em que um professor ministrará as aulas deverá ser minimizado;
+		\item Janelas de horário: intervalos na grade de horários de cada turma, entre duas aulas, deverão ser reduzidos;
+		\item Período preferencial: as turmas diurnas deverão ter suas disciplinas concentradas no período da manhã ou da tarde. Assim, a quantidade de disciplinas ofertadas fora do turno “preferencial” de cada turma deverá ser minimizada;
+		\item Aulas seguidas: aulas repetidas de uma disciplina ministradas para uma turma no mesmo dia devem ser evitadas;
+		\item Intervalo entre períodos: a ocorrência de professores que ministram aula em um dia à noite e no dia seguinte pela manhã deverá ser minimizada;
+		\item Aulas seguidas de nível “difícil”: as aulas de complexidade “difícil” ministradas em horários sequenciais devem ser evitadas;
+		\item Aulas de nível “difícil” no último horário: aulas de complexidade “difícil” ministradas no último horário de cada dia deverão ser evitadas.
+		\item Aulas de carga horária par: aulas com 2 ou 4 horas do turno diurno deverão ser alocadas fora do primeiro horário do dia.
+		\item Aulas alocadas imediatamente antes, ou imediatamente depois, do horário de almoço devem ser evitadas. Ex: Uma aula com carga horária de 2 horas, sendo alocada de 11:00 às 13:00 ou 12:00 às 14:00
+		\item Aulas com alocação iniciada fora do horário padrão. Ex: Uma aula sendo alocada de 13:00 às 14:00 ou 15:00 às 16:00
+    \end{enumerate}
+\end{itemize}
+
+\section{Objetivos}
+\label{sec-intro-objetivos}
+Os objetivos deste trabalho são divididos em objetivo geral e objetivos específicos.
+
+\subsection{Objetivo Geral}
+\label{sec-intro-obg-geral}
+Estudar o  impacto da escolha do fator de aleatoriedade e de movimentos, entre eles o \textit{Lecture Move}, na meta-heurística híbrida \textit{Greedy Randomized Adaptive Search Procedure} (GRASP) com \textit{Simulated Annealing} (SA), quando aplicado ao PTHU do DCOMP-CCENS-UFES
+
+\subsection{Objetivos Específicos}
+\label{sec-intro-obg-esp}
+\begin{enumerate}[label=(\alph*)]
+    \item Estudar novos movimentos a serem usados na busca local do problema abordado;
+    \item Implementar um novo movimento na etapa de busca local;
+    \item Realizar experimentos computacionais;
+    \item Avaliar o desempenho do GRASP com SA usando o novo movimento implementado e diferentes fatores de aleatoriedade;
+    \item Comparar os resultados obtidos com os resultados apresentados por \citeonline{vital2015grasp}, bem como as soluções construídas manualmente pelos coordenadores de curso.
+    
+\end{enumerate}

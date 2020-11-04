@@ -1,0 +1,23 @@
+% ==============================================================================
+% TCC2 - TULIO MULLER
+% Capítulo 2 - Revisão de Literatura
+% ==============================================================================
+\chapter{Revisão de Literatura}
+\label{sec-revisao}
+Na década de 60, \citeonline{gotlieb1962construction}, através de resoluções a partir de análise combinatória, iniciou estudos relacionados ao problema de tabela-horário de instituições de ensino. Desde então, o tema ganhou atenção de pesquisadores \cite{schaerf1999survey, lewis2008survey}.
+
+Devido a grande variedade de restrições específicas a cada instituição de ensino, o problema de tabela-horário não possui uma formulação única.
+
+De acordo com \citeonline{schmidt1980timetable} e \citeonline{souza2000programaccao}, os primeiros trabalhos utilizavam heurísticas construtivas, mas desde então, pesquisadores passaram a utilizar outras técnicas para a resolução do problema, como exemplo, representando o problema com grafos e resolvendo com algoritmos de fluxo \cite{ostermann1982some}, ou coloração \cite{wood1969technique, neufeld1975generalized, cangolovic1991exact}. Outros trabalhos também usaram programação inteira mista \cite{tripathy1984school, ferland1985timetabling}.
+
+Em \citeonline{lewis2008survey} pode ser observado que grande parte dos trabalhos recentes tem utilizado meta-heurísticas, tanto pela simplicidade, quanto pelos bons resultados alcançados. \textit{Simulated Annealing} \cite{mariano2014alns}, Busca Tabu \cite{machado2009proposta}, Algoritmos  Genéticos \cite{burke1994genetic} e Algoritmos Meméticos \cite{burke1995memetic} são as meta-heurísticas mais utilizadas. Em alguns trabalhos se observa também  combinação de meta-heurísticas \cite{vital2015grasp}.
+
+Na primeira edição do campeonato internacional de tabela-horário (\textit{International Timetabling Competition} - ITC), realizado em 2002 (ITC-2002), \citeonline{kostuch2004university} desenvolve um algoritmo que constrói a tabela-horário em três etapas. Na primeira etapa é usado um algoritmo de coloração de grafos, que obtém uma solução inicial viável. Na segunda e terceira etapas aplica-se o \textit{Simulated Annealing}, sendo que em cada etapa é utilizada uma estrutura diferente de vizinhança.
+
+\citeonline{muller2009itc2007} resolve o problema de tabela-horário de universidades da terceira formulação da segunda edição do ITC, realizado em 2007 (ITC-2007), usando \textit{Conflict-based Statistics} para gerar a solução inicial e \textit{Hill Climbing} combinado com \textit{Great Deluge} e \textit{Simulated Annealing} para refinamento da solução. \citeonline{rocha2013algoritmo} trata do mesmo problema aplicando a meta-heurística \textit{Greedy Randomized Adaptive Search Procedure} (GRASP), sendo testados os métodos \textit{Hill Climbing} e \textit{Simulated Annealing} como métodos de busca local, e o método \textit{Path-Relinking} também é aplicado, mas para intensificar a busca por soluções de boa qualidade. \citeonline{segatto2017} expande o trabalho de \citeonline{rocha2013algoritmo} e implementa novas vizinhanças. Dessa forma, proporcionou um maior entendimento do processo de busca no espaço de soluções e conseguiu melhorar o desempenho do algoritmo.
+
+\citeonline{elmohamed1997comparison} investigaram diversas formas de aplicar o \textit{Simulated Annealing} no PTHU da Universidade de Syracuse. Dentre as configurações investigadas, os melhores resultados foram obtidos com resfriamento adaptativo, reaquecimento e um algoritmo baseado em regras, que é usado para gerar uma boa solução inicial. \citeonline{ceschia-gaspero-shaerf-2012} usam \textit{Simulated Annealing} para resolver a terceira formulação do ITC-2007. Os autores conseguiram boas respostas para as instâncias usadas no ITC-2007, e em algumas instâncias foram obtidas melhores soluções que as conhecidas até aquele momento.
+
+\citeonline{mariano2014alns} utilizou a meta-heurística \textit{Adaptive Large Neighborhood Search} (ALNS), aplicada ao PTHU de um caso real do DCOMP-CCENS-UFES.
+
+Ainda para o PTHU do DCOMP-CCENS-UFES, \citeonline{vital2015grasp} apresentou uma proposta de utilizar a meta-heurística \textit{Greedy Randomized Adaptive Search Procedure} (GRASP), com o \textit{Simulated Annealing} na fase de busca local, tendo encontrado soluções melhores do que as feitas manualmente pelos coordenadores de curso. \citeonline{carvalho2016etal} resolve o mesmo problema que \citeonline{mariano2014alns} e \citeonline{vital2015grasp}, porém usa um método guloso para construir uma solução inicial que é refinada através da meta-heurística \textit{Simulated Annealing}.

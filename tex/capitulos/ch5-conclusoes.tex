@@ -1,0 +1,19 @@
+% ==============================================================================
+% TCC2 - TULIO MULLER
+% Capítulo 5 - Conclusões
+% ==============================================================================
+\chapter{Conclusões}
+\label{sec-conclusoes}
+
+Este trabalho teve como objetivo o estudo do impacto da aleatoriedade e de movimentos na meta-heurística GRASP com \textit{Simulated Annealing} para a resolução do Problema de Tabela-Horários de Universidades, considerando o Departamento de Computação do Centro de Ciências Exatas, Naturais e da Saúde da Universidade Federal do Espírito Santo como caso de estudo.
+
+Neste trabalho foi implementado o movimento \textit{Lecture Move}, que é a combinação dos clássicos movimentos \textit{Move} e \textit{Swap}, sendo executado para diferentes fatores de aleatoriedade (\(\alpha\)).
+
+Os resultados obtidos foram comparados com outro trabalho na literatura \cite{vital2015grasp}, bem como as soluções manuais elaboradas pelos coordenadores de curso do DCOMP-CCENS-UFES, apresentando soluções melhores para ambos os casos.
+
+Portanto, os resultados obtidos por este trabalho mostraram-se ser mais eficazes que os existentes na literatura, podendo ser aplicado para a geração de Tabela-Horários em semestres futuros, e assim obter tabelas de horários aproximadamente 78,2\% melhores, ou seja, com menos violações de restrições, do que as soluções atuais que são construídas manualmente pelos coordenadores de curso.
+
+Como trabalhos futuros, sugere-se a implementação de novos movimentos para problemas de tabela-horário, como exemplo, o clássico \textit{Cadeia de Kempe}, além de movimentos específicos para restrições fracas, assim como \citeonline{muller2009itc2007} fez para o ITC-2007.
+Além disso, outros trabalhos futuros poderiam realizar a implementação de outras meta-heurísticas como Busca Tabu e \textit{Iterated Local Search}, que também podem usar o \textit{SA} como busca local.
+
+Todo o código fonte deste trabalho, bem como as instâncias e saídas, se encontram disponíveis através do link \href{https://github.com/mmtulio/TCC2}{https://github.com/mmtulio/TCC2}.

@@ -1,0 +1,541 @@
+% ==============================================================================
+% TCC2 - TULIO MULLER
+% Capítulo 3 - Metodologia
+% ==============================================================================
+\chapter{Metodologia}
+\label{sec-metodologia}
+Nesse capítulo é apresentada a metodologia proposta para o desenvolvimento deste trabalho, em que é descrita a forma como o problema foi modelado, bem como as instâncias utilizadas nos testes do estudo proposto. 
+
+\section{Modelagem do Problema}
+\label{sec-met-modelagem}
+A modelagem usada para representar o PTHU do DCOMP-CCENS-UFES foi baseada nos trabalhos de \citeonline{mariano2014alns} e \citeonline{vital2015grasp}, além das instâncias que estes trabalhos utilizaram. O problema é modelado com estruturas definidas pelo identificador de cada elemento relevante e das características seguintes ao identificador.
+
+As estruturas são armazenadas em vetores que possibilitam estabelecer as relações entre os conjuntos de elementos que são trabalhados. Desse modo, as estruturas mais simples são: salas, professores, disciplinas, turmas e horários. Além dessas, é estabelecida uma estrutura denominada oferta, que promove a relação entre todas as outras. O levantamento de todas as entidades que referem-se aos períodos 2013/2 e 2016/1, usados nos testes deste trabalho, constam no Apêndice \ref{ap-dados}.
+
+Para a entidade sala é definida uma estrutura capaz de armazenar as informações necessárias, de modo que a coluna ‘Prédio’ possui a sigla da localização, a coluna ‘Tipo’ significa se é um laboratório ou uma sala comum, além de seu número de identificação e a capacidade de alunos que ela comporta.
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ | c | c | c | c | c |}\hline
+\textbf{Id} & \textbf{Prédio} & \textbf{Tipo} & \textbf{Número} & \textbf{Capacidade}\\\hline
+0 & PC & 0 & 9 & 40\\\hline
+\end{tabular}
+\caption{Estrutura da entidade sala.}
+\label{tbl-met-sala}
+\end{table}
+
+Para a entidade professor é definida uma estrutura capaz de armazenar o identificador e o nome.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ | c | c | }\hline
+\textbf{Id} & \textbf{Nome} \\\hline
+0 & Edmar Hell Kampke \\\hline
+\end{tabular}
+\caption{Estrutura da entidade professor.}
+\label{tbl-met-prof}
+\end{table}
+
+Para a entidade disciplina é criada uma estrutura com o identificador da disciplina, bem como seu código oficial, seu nome e o nível de dificuldade atribuído à esta disciplina.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ | c | c | c | c | }\hline
+\textbf{Id} & \textbf{Código} & \textbf{Nome} & \textbf{Nível} \\\hline
+0 & COM06842 & Programação I & 1 \\\hline
+\end{tabular}
+\caption{Estrutura da entidade disciplina.}
+\label{tbl-met-disc}
+\end{table}
+
+Para a entidade tipo de sala é criada uma estrutura que armazena o identificador do tipo de sala e sua descrição, que pode ser uma sala comum ou um laboratório.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ | c | c | }\hline
+\textbf{Id} & \textbf{Descrição} \\\hline
+0 & Sala \\\hline
+\end{tabular}
+\caption{Estrutura da entidade tipo de sala.}
+\label{tbl-met-tp-sala}
+\end{table}
+
+Para a entidade turma é definida uma estrutura que possui além do identificador da turma, o nome do curso, representado por uma sigla, o período da turma em questão e seu turno preferencial (0, de manhã, 1, à tarde e 2, à noite).
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ | c | c | c | c | }\hline
+\textbf{Id} & \textbf{Curso} & \textbf{Período} & \textbf{Turno Preferencial} \\\hline
+0 & CC & 1 & 1 \\\hline
+\end{tabular}
+\caption{Estrutura da entidade turma.}
+\label{tbl-met-turm}
+\end{table}
+
+Para entidade horário, é criada estrutura para armazenar cada faixa de horário, de modo que corresponda a um período unitário. Desse modo, é definido um vetor com o identificador do horário, o horário inicial e final e a duração em minutos.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ | c | c | c | c | }\hline
+\textbf{Id} & \textbf{Horário Inicial} & \textbf{Horário Final} & \textbf{Duração} \\\hline
+0 & 07h00 & 08h00 & 60 \\\hline
+\end{tabular}
+\caption{Estrutura da entidade horário.}
+\label{tbl-met-horar}
+\end{table}
+
+Para a entidade oferta, é criada uma estrutura capaz de conter vários elementos. Sendo assim, uma estrutura que representa uma oferta deve possuir o seu identificador, o identificador da disciplina que será ofertada, o número de turmas que poderá se matricular nesta oferta, bem como os identificadores destas turmas, o número de vagas que serão disponibilizadas para os alunos, o turno em que esta oferta será destinada, o identificador do professor responsável por esta oferta, além do tipo de sala que será necessária para conduzir as aulas e a carga horária da oferta, que no caso abaixo, representa 2 horas-aula seguidas.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{| c | c | M{1,5cm} | c | c | c | c | M{1,5cm} | M{1cm} |}
+\hline
+\textbf{Id} & \textbf{Disciplina} & \textbf{Nº de turmas} & \textbf{Turmas{[} {]}} & \textbf{Vagas} & \textbf{Turno} & \textbf{Professor} & \textbf{Tipo de Sala} & \textbf{CH} \\\hline
+0 & 0 & 2 & 0 18 & 37 & 1 & 12 & 1 & 2 \\ \hline
+\end{tabular}
+\caption{Estrutura da entidade oferta}
+\label{tbl-met-ofert}
+\end{table}
+
+Com todos os dados armazenados nas estruturas previamente definidas, o algoritmo inicia o processo de criação de uma solução inicial, que cria as três tabelas-horário essenciais para a solução final do PTHU, que são: a tabela-horário de cada sala, na qual deve constar todas as ofertas que serão lecionadas naquele local, a tabela-horário de cada professor, na qual ficam armazenados as ofertas que o professor leciona, além da tabela-horário de cada turma, que consta as ofertas das disciplinas da turma.
+
+Nas Tabelas \ref{tbl_ofertas}, \ref{tbl_prof} e \ref{tbl_alocadas} são apresentadas como as tabelas-horário, respectivamente, de uma sala, de um professor e uma turma são representadas. As células que possuem número positivos (destaque em cinza) são aquelas com ofertas alocadas. Esses números representam o identificador da oferta ali alocada.
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{} & \multicolumn{5}{c|}{\textbf{Sala X}} \\ \hline
+\textbf{Horário} & \textbf{Segunda} & \textbf{Terça} & \textbf{Quarta} & \textbf{Quinta} & \textbf{Sexta} \\ \hline
+07:00-08:00 & -1 & -1 & -1 & -1 & -1 \\ \hline
+08:00-09:00 & -1 & -1 & -2 & \cellcolor[HTML]{C0C0C0}17 & -2 \\ \hline
+09:00-10:00 & -1 & -1 & -2 & \cellcolor[HTML]{C0C0C0}17 & -2 \\ \hline
+10:00-11:00 & -1 & \cellcolor[HTML]{C0C0C0}92 & -2 & \cellcolor[HTML]{C0C0C0}27 & -1 \\ \hline
+11:00-12:00 & -1 & \cellcolor[HTML]{C0C0C0}92 & -2 & \cellcolor[HTML]{C0C0C0}27 & -1 \\ \hline
+13:00-14:00 & -2 & -2 & -2 & -2 & \cellcolor[HTML]{C0C0C0}18 \\ \hline
+14:00-15:00 & -2 & -2 & -2 & -2 & \cellcolor[HTML]{C0C0C0}18 \\ \hline
+15:00-16:00 & -1 & -2 & \cellcolor[HTML]{C0C0C0}2 & -1 & -2 \\ \hline
+16:00-17:00 & -1 & -2 & \cellcolor[HTML]{C0C0C0}2 & -1 & -2 \\ \hline
+18:00-19:00 & -2 & -2 & -2 & -2 & -2 \\ \hline
+19:00-20:00 & -2 & -2 & -2 & -2 & -2 \\ \hline
+20:00-21:00 & -2 & -2 & -2 & -2 & -2 \\ \hline
+21:00-22:00 & -2 & -2 & -2 & -2 & -2 \\ \hline
+22:00-23:00 & -2 & -2 & -2 & -2 & -2 \\ \hline
+\end{tabular}
+\caption{Representação de uma tabela-horário de sala com ofertas alocadas}
+\label{tbl_ofertas}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{} & \multicolumn{5}{c|}{\textbf{Professor Y}} \\ \hline
+\textbf{Horário} & \textbf{Segunda} & \textbf{Terça} & \textbf{Quarta} & \textbf{Quinta} & \textbf{Sexta} \\ \hline
+07:00-08:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+08:00-09:00 & \cellcolor[HTML]{C0C0C0}11  & -1  & -1  & -1  & -1  \\ \hline
+09:00-10:00 & \cellcolor[HTML]{C0C0C0}11  & -1  & -1  & -1  & -1  \\ \hline
+10:00-11:00 & \cellcolor[HTML]{C0C0C0}11  & -1  & -1  & -1  & -1  \\ \hline
+11:00-12:00 & \cellcolor[HTML]{C0C0C0}11  & -1  & -1  & -1  & -1  \\ \hline
+13:00-14:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+14:00-15:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+15:00-16:00 & -1  &  \cellcolor[HTML]{C0C0C0}8  & -1  &  \cellcolor[HTML]{C0C0C0}4  & -1  \\ \hline
+16:00-17:00 & -1  &  \cellcolor[HTML]{C0C0C0}8  & -1  &  \cellcolor[HTML]{C0C0C0}4  & -1  \\ \hline
+18:00-19:00 & -1  &  \cellcolor[HTML]{C0C0C0}8  & -1  & -1  & -1  \\ \hline
+19:00-20:00 & -1  &  \cellcolor[HTML]{C0C0C0}8  & -1  & -1  & -1  \\ \hline
+20:00-21:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+21:00-22:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+22:00-23:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+\end{tabular}
+\caption{Representação de uma tabela-horário de professor com salas alocadas}
+\label{tbl_prof}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{} & \multicolumn{5}{c|}{\textbf{Turma Z}} \\ \hline
+\textbf{Horário} & \textbf{Segunda} & \textbf{Terça} & \textbf{Quarta} & \textbf{Quinta} & \textbf{Sexta} \\ \hline
+07:00-08:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+08:00-09:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+09:00-10:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+10:00-11:00 &  \cellcolor[HTML]{C0C0C0}0  & -1  & -1  & -1  &  \cellcolor[HTML]{C0C0C0}2  \\ \hline
+11:00-12:00 &  \cellcolor[HTML]{C0C0C0}0  & -1  & -1  & -1  &  \cellcolor[HTML]{C0C0C0}2  \\ \hline
+13:00-14:00 &  \cellcolor[HTML]{C0C0C0}3  & -1  &  \cellcolor[HTML]{C0C0C0}7  &  \cellcolor[HTML]{C0C0C0}9  & -1  \\ \hline
+14:00-15:00 &  \cellcolor[HTML]{C0C0C0}3  & -1  &  \cellcolor[HTML]{C0C0C0}7  &  \cellcolor[HTML]{C0C0C0}9  & -1  \\ \hline
+15:00-16:00 & -1  & -1  &  \cellcolor[HTML]{C0C0C0}5  &  \cellcolor[HTML]{C0C0C0}9  & -1  \\ \hline
+16:00-17:00 & -1  & -1  &  \cellcolor[HTML]{C0C0C0}5  &  \cellcolor[HTML]{C0C0C0}9  & -1  \\ \hline
+18:00-19:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+19:00-20:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+20:00-21:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+21:00-22:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+23:00-22:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+\end{tabular}
+\caption{Representação de uma tabela-horário de turma com salas alocadas}
+\label{tbl_alocadas}
+\end{table}
+
+\section{Função Objetivo}
+\label{sec-met-fo}
+
+Cada tabela-horário gerada recebe uma nota que reflete sua qualidade, a função \(f\) que calcula essa nota é chamada de Função Objetivo (FO). Cada restrição violada aumenta o valor da função objetivo de acordo com o peso da restrição. A melhor solução para um problema de tabela-horário é aquela que minimiza o valor da função objetivo.
+
+Seja \textit{S} uma solução do PTHU abordado, e considerando que \(f_{RFt}(S)\) e \(f_{RFc}(S)\) são o número total de violações das restrições fortes e fracas de \textit{S}, respectivamente, então \textit{S} é uma solução viável, se todas as restrições fortes são satisfeitas, ou seja \(f_{RFt}(S) = 0\). De acordo com as restrições propostas por \citeonline{mariano2014alns} e posteriormente expandidas por \citeonline{vital2015grasp}, a função objetivo do PTHU do DCOMP-CCENS-UFES é calculada pela seguinte fórmula:
+    \[f(S) = f_{RFt}(S) + f_{RFc}(S)\]
+sendo
+    \[f_{RFt}(S) = \omega_1\sum_{p=1}^{P}CP_p\ +\ \omega_2\sum_{t=1}^{T}CT_t\ +\ \omega_3\sum_{s=1}^{S}CS_s\ +\ \omega_4OFT\ +\ \omega_5\sum_{s=1}^{S}VS_s\ +\ \omega_6TSI\ +\ \omega_7D3H\]
+e
+    \[f_{RFc}(S) = \omega_8\sum_{p=1}^{P}IT_p\ +\ \omega_9\sum_{t=1}^{T}JH_t\ +\ \omega_{10}\sum_{t=1}^{T}PP_t\ +\ \omega_{11}\sum_{d=1}^{D}AS_d\ +\ \omega_{12}\sum_{p=1}^{P}ND_p\ +\] 
+    \[\omega_{13}ASD\ +\ \omega_{14}ADU\ +\ \omega_{15}DHP\ +\ \omega_{16}AHA\ +\ \omega_{17}AHFP\]
+
+Considerando que:
+
+\begin{enumerate}[leftmargin=1.5\parindent]
+    \item \(CP_p\): número de conflitos do professor \textit{p}, ou seja, o número de vezes que o professor \textit{p} ministra aula no mesmo dia e horário;
+    \item \(CT_t\): número de conflitos da turma \textit{t}, ou seja, o número de vezes que os alunos da turma \textit{t} assistem mais de uma aula no mesmo dia e mesmo horário;
+    \item \(CS_s\): número de conflitos da sala \textit{s}, ou seja, o número de vezes que a sala \textit{s} está atribuída a mais de uma turma no mesmo dia e mesmo horário;
+    \item \(OFT\): número de violações em que uma oferta é alocada fora do turno;
+    \item \(VS_s\): número de violações na capacidade da sala \textit{s}, ou seja, o número de turmas alocadas na sala \textit{s} cujo número de alunos é maior que a capacidade da sala;
+    \item \(TSI\): número de aulas alocadas em salas de tipo “incompatível”, ou seja, se 10 aulas devem ser em laboratório e foram alocadas em salas normais, TSI = 10;
+    \item \(D3H\): número de disciplinas de 3 horas aulas semanais alocadas fora dos horários “padrão” (primeiro e último horário, tanto do dia quanto da noite);
+	\item \(IT_p\): diferença entre o primeiro e o último dia em que o professor \textit{p} ministra aulas em relação a um intervalo padrão \textit{I}, que deverá ser um parâmetro de entrada. Nesse caso, deve-se contabilizar apenas o que exceder \textit{I}. Ex: Considerando \(I = 3\) e que o professor 1 dá aulas de segunda a quinta, logo \(IT_1 = MAX (0, Quinta - Segunda + 1 - I) \rightarrow IT_1 = 1\); Caso o professor dê aulas de segunda a terça, \(IT_1 = MAX (0, \textit{Terça} - Segunda + 1 - I) \rightarrow IT_1 = 0\);
+	\item \(JH_t\): número de janelas de horário da turma \textit{t}, ou seja, o número de horários vagos entre aulas ao longo da semana para a turma \textit{t};
+	\item \(PP_t\): número aulas da turma \textit{t} fora do seu período preferencial (M,T,N). Ex: o período preferencial para a turma 1 é a tarde (T), logo, \(PP_1\) = número de aulas para essa turma alocadas no período da manhã;
+	\item \(AS_d\): número de aulas seguidas da disciplina \textit{d}, ou seja, o número de vezes que a disciplina \textit{d} é repetida num mesmo dia;
+	\item \(ND_p\): número de vezes que o professor \textit{p} ministra aula à noite (qualquer horário) em um dia e pela manhã (qualquer horário) no dia seguinte;
+	\item \(ASD\): número de aulas seguidas de disciplinas de nível difícil, ou seja, o número de vezes ao longo da semana em que duas disciplinas “difíceis” são consecutivas;
+	\item \(ADU\): número de aulas de disciplinas de nível difícil ministradas no último horário da tarde ou da noite;
+	\item \(DHP\): número de aulas de disciplinas, do turno diurno, com carga horária par, alocadas no primeiro horário do dia;
+	\item \(AHA\): número de aulas de disciplinas, do turno diurno, alocadas entre o horário de almoço;
+	\item \(AHFP\): número de aulas de disciplinas com alocação iniciada fora do horário padrão. Ex: uma aula sendo alocada de 13:00 às 14:00 ou 15:00 às 16:00.
+\end{enumerate}
+
+O vetor \(\omega = [\omega_1, \omega_2, \omega_3, ..., \omega_{17}]\) contém os pesos das 17 restrições (7 fortes e 10 fracas) consideradas por \citeonline{vital2015grasp} e apresentadas no Capítulo \ref{sec-intro} deste trabalho.
+
+\section{GRASP}
+\label{sec-met-grasp}
+
+A meta-heurística \textit{Greedy Randomized Adaptive Search Procedure} (GRASP), apresentada por \citeonline{feo1989probabilistic} foi inicialmente utilizada para tratar o problema de cobertura de conjuntos.
+
+De acordo com \citeonline{rocha2013algoritmo}, o GRASP já foi aplicado com sucesso em diversos problemas de otimização desde sua proposta inicial, tais como: conjunto independente máximo \cite{feo1994greedy}, problema quadrático de alocação \cite{li1994greedy}, satisfatividade \cite{resende1996grasp}, planarização de grafos \cite{resende1997grasp}, roteamento de circuitos virtuais \cite{resende2003grasp}, entre outros.
+
+No Algoritmo \ref{algo-grasp} é apresentado o pseudocódigo genérico da meta-heurística GRASP.
+
+\begin{algorithm}[H]
+\SetKwInput{Entrada}{Entrada}
+\SetKwInput{Saida}{Saída}
+\SetKwInput{Dados}{Dados}
+\SetKwInput{Resultado}{Resultado}
+\SetKwBlock{Inicio}{início}{fim}
+\SetKwIF{Se}{SenaoSe}{Senao}{se}{então}{senão-se}{senão}{fim\ se}
+\SetKwFor{Para}{para}{faça}{fim\ para}
+\SetKwFor{ParaPar}{para}{faça em paralelo}{fim-para}
+\SetKwFor{ParaCada}{para cada}{faça}{fim\ para\ cada}
+\SetKwFor{ParaTodo}{para todo}{faça}{fim\ para\ todo}
+\SetKwFor{Enqto}{enquanto}{faça}{fim\ enquanto}
+\SetKwRepeat{Repita}{repita}{até}
+
+\Entrada {\(Max_{Iter}\), \(\alpha\)}
+\Saida{Solução \textit{\(S^{Melhor}\)}}
+\Inicio{
+    \(FO^{Melhor}\gets \infty\)\;
+    \Para{\(i\gets 1\) \Ate \(Max_{Iter}\)}{
+        \(S^{Inicial} \gets GeraSolucaoInicial(\alpha)\)\;
+        \(S^{Atual} \gets BuscaLocal(S^{Inicial})\)\;
+        \Se{\(f(S^{Atual}) < FO^{Melhor}\)}{
+            \(S^{Melhor} \gets S^{Atual}\)\;
+            \(FO^{Melhor}\gets f(S^{Atual})\)\;
+        }
+    }
+}
+\caption{Algoritmo do GRASP apresentado por
+\citeonline{feo1989probabilistic}}
+\label{algo-grasp}
+\end{algorithm}
+
+O algoritmo GRASP é um procedimento iterativo dividido em  duas fases, que são detalhadas nas próximas seções. Na primeira fase constrói-se uma solução inicial, e na segunda fase aplica-se uma busca local para melhorá-la. A resposta final é a melhor obtida após a execução de todas as iterações \cite{feo1995greedy}. Para essa meta-heurística são utilizados dois parâmetros principais: o número máximo de iterações \(Max_{Iter}\) e o fator de aleatoriedade (\(\alpha\)).
+
+% \begin{table}
+% \label{tbl-met-grade-turm}
+% \centering
+% \begin{tabular}{|c|c|c|c|c|c|}
+% \hline
+% \textbf{} & \multicolumn{5}{c|}{\textbf{Sala X}} \\ \hline
+% \textbf{Horário} & \textbf{Segunda} & \textbf{Terça} & \textbf{Quarta} & \textbf{Quinta} & \textbf{Sexta} \\ \hline
+% 07:00-08:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+% 08:00-09:00 &  \cellcolor[HTML]{FFCE93}0  & -1  & -1  & -1  & -1  \\ \hline
+% 09:00-10:00 &  \cellcolor[HTML]{FFCE93}0  & -1  & -1  & -1  & -1  \\ \hline
+% 10:00-11:00 & -1  & -1  &  \cellcolor[HTML]{68CBD0}0  &  \cellcolor[HTML]{67FD9A}0  & -1  \\ \hline
+% 11:00-12:00 & -1  & -1  &  \cellcolor[HTML]{68CBD0}0  &  \cellcolor[HTML]{67FD9A}0  & -1  \\ \hline
+% 13:30-14:30 &  \cellcolor[HTML]{FD6864}0  & -1  & -1  & -1  & -1  \\ \hline
+% 14:30-15:30 &  \cellcolor[HTML]{FD6864}0  & -1  & -1  & -1  & -1  \\ \hline
+% 15:30-16:30 & -1  & -1  & -1  & -1  & -1  \\ \hline
+% 16:30-17:30 & -1  & -1  & -1  & -1  & -1  \\ \hline
+% 18:20-19:10 & -1  & -1  & -1  & -1  & -1  \\ \hline
+% 19:10-20:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+% 20:00-20:50 & -1  & -1  & -1  & -1  & -1  \\ \hline
+% 21:00-21:50 & -1  & -1  & -1  & -1  & -1  \\ \hline
+% 21:50-22:40 & -1  & -1  & -1  & -1  & -1  \\ \hline
+% \end{tabular}
+% \caption{Tabela-horário antes de uma iteração do construtor de soluções.}
+% \end{table}
+
+\subsection{Construção da solução inicial}
+\label{sec-met-si}
+
+Inicialmente, uma solução vazia (sem ofertas alocadas) para o PTHU do DCOMP-CCENS-UFES é criada. Nessa solução inicial, todas as células de cada tabela-horário terá valor negativo, sendo -1 se o horário estiver disponível e -2 se naquele horário já há uma oferta de outro departamento da UFES alocada.
+
+A partir disso, uma lista de ofertas, contendo todas as ofertas, é criada. Essa lista é ordenada de forma decrescente pelo número de vagas. A partir da lista inicial, são feitas simulações de alocação em todas as posições da matriz de salas, com a oferta que possui o maior número de vagas. Cada simulação tem seu custo calculado, e cada uma dessas simulações é inserida em uma lista denominada Lista de Candidatos (LC).
+
+A LC possui a posição em que a simulação de alocação foi efetuada e seu custo de alocação. A LC serve de base para a formação de uma outra lista, denominada Lista Restrita de Candidatos (LRC), que é composta por um intervalo da LC, depois dela ter sido ordenada crescentemente pelo custo de alocação das simulações. Esse intervalo é definido de acordo com o fator de aleatoriedade \(\alpha\) da seguinte forma: \([ c^{min}, c^{min} + \alpha(c^{max} - c^{min})]\) em que \(c^{min}\) representa o menor custo de alocação, \(c^{max}\) representa o maior custo de alocação, e \(\alpha \in [0,1]\).
+
+Quando \(\alpha = 1\), LC tem seu elementos totalmente selecionados para LRC, se \(\alpha = 0\), LRC é preenchida somente com o primeiro elemento de LC. Um horário é escolhido de LRC aleatoriamente e a oferta é acrescentada à solução. É importante destacar que quando \(\alpha = 1\) a escolha do horário é feita de maneira totalmente aleatória, caso \(\alpha = 0\), o horário de LC que possui o menor custo será sempre escolhido, o que representa o uma escolha totalmente gulosa.
+
+Após a alocação da oferta, ela é removida da lista de ofertas e o procedimento é repetido até que todas as ofertas sejam alocadas. Portanto, a construção da solução inicial termina quando todas as ofertas estiverem inseridas na tabela-horário.
+
+Na Figura \ref{tbl_it_constr_sol} é exibido um exemplo de uma iteração da fase de construção de uma solução inicial no método GRASP. Nesse exemplo, a LC da oferta ainda não alocada e que possui maior número de vagas é criada com seis possíveis horários para alocação ordenados crescentemente pelo custo de alocação, calculado durante cada simulação. Em seguida, é formada a LRC, com apenas três horários, supondo o fator de aleatoriedade \(\alpha = 0,5\). Dentre esses três horários é feita uma escolha aleatória para definir em qual horário a oferta é alocada. Essa alocação é representada na Tabela \ref{tbl-met-gerad-soluc} com a alocação da oferta cujo identificador é 0 (destaque em laranja).
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ccccccc}
+\multicolumn{7}{c}{LC da oferta com maior nº de vagas} \\ \hline
+\multicolumn{1}{|c|}{Posição} & \multicolumn{1}{c|}{{[}1{]}{[}2{]}{[}0{]}} & \multicolumn{1}{c|}{{[}3{]}{[}3{]}{[}2{]}} & \multicolumn{1}{c|}{{[}1{]}{[}2{]}{[}2{]}} & \multicolumn{1}{c|}{{[}3{]}{[}2{]}{[}3{]}} & \multicolumn{1}{c|}{{[}7{]}{[}5{]}{[}1{]}} & \multicolumn{1}{c|}{{[}1{]}{[}4{]}{[}4{]}} \\ \hline
+\multicolumn{1}{|c|}{Custo} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{566} & \multicolumn{1}{c|}{700} & \multicolumn{1}{c|}{885} & \multicolumn{1}{c|}{990} \\ \hline
+\multicolumn{7}{c}{\Huge\(\Downarrow\) \vspace{2mm}} \\
+\multicolumn{7}{c}{LRC definida de acordo com \(\alpha\)} \\ \cline{2-6}
+\multicolumn{1}{c|}{} & \multicolumn{2}{c|}{Posição} & \multicolumn{1}{c|}{{[}1{]}{[}2{]}{[}0{]}} & \multicolumn{1}{c|}{{[}3{]}{[}3{]}{[}2{]}} & \multicolumn{1}{c|}{{[}1{]}{[}2{]}{[}2{]}} &  \\ \cline{2-6}
+\multicolumn{1}{c|}{} & \multicolumn{2}{c|}{Custo} & \multicolumn{1}{c|}{400} & \multicolumn{1}{c|}{500} & \multicolumn{1}{c|}{566} &  \\ \cline{2-6}
+\multicolumn{7}{c}{\Huge\(\Downarrow\) \vspace{2mm}} \\
+\multicolumn{7}{c}{Escolha aleatória: candidato{[}1{]}, posição{[}3{]}{[}3{]}{[}2{]}}
+\end{tabular}
+\captionof{figure}{Exemplo de uma iteração do construtor de soluções}
+\label{tbl_it_constr_sol}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{} & \multicolumn{5}{c|}{\textbf{Sala X}} \\ \hline
+\textbf{Horário} & \textbf{Segunda} & \textbf{Terça} & \textbf{Quarta} & \textbf{Quinta} & \textbf{Sexta} \\ \hline
+07:00-08:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+08:00-09:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+09:00-10:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+10:00-11:00 & -1  & -1  &  \cellcolor[HTML]{FFCE93}0  & -1  & -1  \\ \hline
+11:00-12:00 & -1  & -1  &  \cellcolor[HTML]{FFCE93}0  & -1  & -1  \\ \hline
+13:00-14:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+14:00-15:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+15:00-16:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+16:00-17:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+18:00-19:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+19:00-20:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+20:00-21:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+21:00-22:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+22:00-23:00 & -1  & -1  & -1  & -1  & -1  \\ \hline
+\end{tabular}
+\caption{Tabela-horário depois de uma iteração do procedimento de criar soluções.}
+\label{tbl-met-gerad-soluc}
+\end{table}
+
+
+\subsection{Busca Local}
+\label{sec-met-busca}
+
+O objetivo da busca local é melhorar a solução inicialmente construída. A estratégia de busca local utilizada foi a meta-heurística \textit{Simulated Annealing}, pois ela se mostrou satisfatória em outros trabalhos, como de \citeonline{rocha2013algoritmo}, \citeonline{mariano2014alns} e \citeonline{carvalho2016etal}. 
+
+\subsubsection{\textit{Simulated Annealing}}
+\label{sec-met-sa}
+
+A meta-heurística \textit{Simulated Annealing} tem como inspiração o processo da metalurgia conhecido como recozimento, em que derrete-se um metal e ele é esfriado lentamente até a solidificação, de forma controlada, para que sua estrutura se mantenha organizada e equilibrada \cite{kirkpatrick1983optimization}.
+
+Os cinco principais parâmetros que o \textit{Simulated Annealing} possui são: a solução inicial (\emph{S}), a temperatura inicial (\(T_i\)), a temperatura final (\(T_f\)), a taxa de resfriamento (\(\beta\)) e o número de soluções vizinhas (\(N_v\)) que deverão ser geradas a cada iteração.
+
+O algoritmo começa com uma temperatura inicial e vai sendo resfriada até chegar na temperatura final. Em cada temperatura (iteração), começando com a temperatura inicial \(T_i\), são gerados \(N_v\) vizinhos. Se o vizinho gerado tem uma FO menor que a da solução atual, esta é atualizada. Se o vizinho tiver uma FO maior, ele pode ser aceito com uma probabilidade \(e^{-\Delta f/T}\), em que \(\Delta f\) é a diferença entre os valores das FO's da solução vizinha e da solução atual, e \(T\) é a temperatura atual. Quanto maior \(\Delta f\), e menor a temperatura atual \(T\), menor será a chance de aceitar uma solução vizinha. Tipicamente, o algoritmo aceita grande diversificação de soluções no início, quando a temperatura está alta. À medida que a temperatura decresce, poucas soluções piores são aceitas e assim é intensificada a busca em uma determinada vizinhança. Ao final de cada iteração, a temperatura \(T\) é multiplicada pelo valor \(\beta\), sendo \(\beta \in [0,1]\) a taxa de resfriamento. O Algoritmo termina quando \(T < T_f\).
+
+O Algoritmo \ref{algosa} apresenta o pseudocódigo da meta-heurística \textit{Simulated Annealing} aplicada na fase da busca local.
+
+\begin{algorithm}
+\caption{Algoritmo do \emph{SA} adaptado de \citeonline{rocha2013algoritmo}}
+\label{algosa}
+\SetKwInput{Entrada}{Entrada}
+\SetKwInput{Saida}{Saída}
+\SetKwInput{Dados}{Dados}
+\SetKwInput{Resultado}{Resultado}
+\SetKwBlock{Inicio}{início}{fim}
+\SetKwIF{Se}{SenaoSe}{Senao}{se}{então}{senão-se}{senão}{fim\ se}
+\SetKwFor{Para}{para}{faça}{fim\ para}
+\SetKwFor{ParaPar}{para}{faça em paralelo}{fim-para}
+\SetKwFor{ParaCada}{para cada}{faça}{fim\ para\ cada}
+\SetKwFor{ParaTodo}{para todo}{faça}{fim\ para\ todo}
+\SetKwFor{Enqto}{enquanto}{faça}{fim\ enquanto}
+\SetKwRepeat{Repita}{repita}{até}
+
+\Entrada {Solução S, \(T_i\), \(T_f\), \(\beta\), \(N_v\)}
+\Saida{Solução \(S^{Melhor}\)}
+\Inicio{
+    \(T \gets T_i\)\;
+    \(S^{Melhor} \gets S\)\;
+    \Enqto{\(T > T_f\)}{
+        \Para{\(i\gets 1\) \Ate \(Max_{Iter}\)}{    
+            \(S^{Vizinho} \gets GeraVizinho(S^{Atual})\)\;
+            \(\Delta f \gets f(S^{Vizinho}) - f(S^{Atual})\)\;
+            \eSe{\(\Delta f < 0\)}{
+                \(S^{Atual} \gets S^{Vizinho}\)\;
+            }{
+                \(\text{Gera um número aleatório}\ \rho \in [0, 1]\)\;
+                \Se{\(\rho < e^{-\Delta f/T}\)}{
+                    \(S^{Atual} \gets S^{Vizinho}\)\;
+                }
+            }
+            \Se{\(f(S^{Vizinho}) < f(S^{Melhor})\)}{
+                    \(S^{Melhor} \gets S^{Vizinho}\)\;
+            }
+        }
+        \(T \gets T * \beta\)\;
+    }
+}
+\end{algorithm}
+
+Para gerar novas soluções vizinhas da solução atual, foram utilizados três movimentos. Os movimentos clássicos \textit{Move} e \textit{Swap} implementados por \citeonline{vital2015grasp}, e o movimento \textit{Lecture Move}, baseado neles e proposto por \citeonline{muller2009itc2007}.
+
+\subsubsection{\textit{Lecture Move}}
+\label{sec-met-lm}
+
+Uma vizinhança é definida como um movimento ou um conjunto de movimentos realizados que geram um subconjunto de soluções no espaço de soluções. De acordo com \citeonline{schaerf1999survey}, os clássicos \textit{Move} e \textit{Swap} são os movimentos de vizinhança que estão entre os mais utilizados para problemas de tabela-horário.
+
+O movimento \textit{Move} consiste em mover uma oferta escolhida aleatoriamente para uma posição não ocupada na tabela-horário, também escolhida aleatoriamente. Na Figura \ref{move} ocorre a realização de um movimento do tipo \textit{Move}. Na Figura \ref{move:a} é apresentada uma tabela-horário antes da execução do movimento, e na Figura \ref{move:b}, a tabela-horário após a execução do movimento. A oferta de código \textbf{92} previamente alocada na Terça-feira, no horário de 10:00-12:00 (Figura \ref{move:a}) é movida para Segunda-feira no horário de 08:00-10:00 (Figura \ref{move:b}). Nota-se que no \textit{Move}, a oferta selecionada pode ser movida para qualquer umas das células (ofertas) vazias, desde que essa mudança não cause uma inviabilidade na solução, ou seja, desde que não infrinja nenhuma restrição forte.
+
+\begin{figure}[h!]
+    \tiny
+    \begin{subfigure}[b]{0.5\textwidth}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        & \multicolumn{3}{c|}{Sala X} &  \\ \hline
+        Horário & Segunda & Terça & Quarta & $\cdots$ \\ \hline
+        07:00-08:00 & -1 & -1 & -2 & $\cdots$ \\ \hline
+        08:00-09:00 & -1 & -1 & 27 & $\cdots$ \\ \hline
+        09:00-10:00 & -1 & -1 & 27 & $\cdots$ \\ \hline
+        10:00-11:00 & -1 & \cellcolor[HTML]{FFCE93}92 & -2 & $\cdots$ \\ \hline
+        11:00-12:00 & -1 & \cellcolor[HTML]{FFCE93}92 & -2 & $\cdots$ \\ \hline
+        $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ &  \\ \hline
+    \end{tabular}
+    \caption{Antes do \textit{Move}}
+    \label{move:a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.5\textwidth}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        & \multicolumn{3}{c|}{Sala X} &  \\ \hline
+        Horário & Segunda & Terça & Quarta & $\cdots$ \\ \hline
+        07:00-08:00 & -1 & -1 & -2 & $\cdots$ \\ \hline
+        08:00-09:00 & \cellcolor[HTML]{FFCE93}92 & -1 & 27 & $\cdots$ \\ \hline
+        09:00-10:00 & \cellcolor[HTML]{FFCE93}92 & -1 & 27 & $\cdots$ \\ \hline
+        10:00-11:00 & -1 & -1 & -2 & $\cdots$ \\ \hline
+        11:00-12:00 & -1 & -1 & -2 & $\cdots$ \\ \hline
+        $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ &  \\ \hline
+    \end{tabular}
+    \caption{Depois do \textit{Move}}
+    \label{move:b}
+    \end{subfigure}
+    \caption{Exemplo de um movimento do tipo \textit{Move}}
+    \label{move}
+\end{figure}
+
+O movimento \textit{Swap} consiste na troca entre duas ofertas escolhidas aleatoriamente na tabela-horário. Na Figura \ref{swap} é apresentado um exemplo de aplicação do \textit{Swap}. Na Figura \ref{swap:a} está apresentada uma tabela-horário antes da execução do movimento, e na Figura \ref{swap:b}, a tabela-horário após a execução do movimento. A oferta de código \textbf{92} previamente alocada na Terça-feira, no horário de 10:00-12:00 (Figura \ref{swap:a}) é movida para Quarta-feira no horário de 08:00-10:00, enquanto a oferta de código \textbf{27}, previamente alocada nessa posição passa a ocupar o lugar da oferta \textbf{92} (Figura \ref{swap:b}). Nota-se que no \textit{Swap}, as ofertas selecionadas podem ser movidas para qualquer umas das células (ofertas) compatíveis, desde que essa mudança não cause uma inviabilidade na solução, ou seja, desde que não infrinja nenhuma restrição forte. 
+
+
+\begin{figure}[h!]
+    \tiny
+    \begin{subfigure}[b]{0.5\textwidth}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        & \multicolumn{3}{c|}{Sala X} &  \\ \hline
+        Horário & Segunda & Terça & Quarta & $\cdots$ \\ \hline
+        07:00-08:00 & -1 & -1 & -2 & $\cdots$ \\ \hline
+        08:00-09:00 & -1 & -1 & \cellcolor[HTML]{CBCEFB}27 & $\cdots$ \\ \hline
+        09:00-10:00 & -1 & -1 & \cellcolor[HTML]{CBCEFB}27 & $\cdots$ \\ \hline
+        10:00-11:00 & -1 & \cellcolor[HTML]{FFCE93}92 & -2 & $\cdots$ \\ \hline
+        11:00-12:00 & -1 & \cellcolor[HTML]{FFCE93}92 & -2 & $\cdots$ \\ \hline
+        $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ &  \\ \hline
+    \end{tabular}
+    \caption{Antes do \textit{Swap}}
+    \label{swap:a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.5\textwidth}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        & \multicolumn{3}{c|}{Sala X} &  \\ \hline
+        Horário & Segunda & Terça & Quarta & $\cdots$ \\ \hline
+        07:00-08:00 & -1 & -1 & -2 & $\cdots$ \\ \hline
+        08:00-09:00 & -1 & -1 & \cellcolor[HTML]{FFCE93}92 & $\cdots$ \\ \hline
+        09:00-10:00 & -1 & -1 & \cellcolor[HTML]{FFCE93}92 & $\cdots$ \\ \hline
+        10:00-11:00 & -1 & \cellcolor[HTML]{CBCEFB}27 & -2 & $\cdots$ \\ \hline
+        11:00-12:00 & -1 & \cellcolor[HTML]{CBCEFB}27 & -2 & $\cdots$ \\ \hline
+        $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ &  \\ \hline
+    \end{tabular}
+    \caption{Depois do \textit{Swap}}
+    \label{swap:b}
+    \end{subfigure}
+    \caption{Exemplo de um movimento do tipo \textit{Swap}}
+    \label{swap}
+\end{figure}
+
+
+Os movimentos \textit{Move} e \textit{Swap} foram implementados no trabalho de \citeonline{vital2015grasp}. Neste trabalho, utilizando como base os movimentos \textit{Move} e \textit{Swap} implementados por \citeonline{vital2015grasp}, foi implementado um novo movimento, denominado \textit{Lecture Move}. O movimento \textit{Lecture Move} consiste na troca entre duas ofertas ou entre uma oferta e um horário vazio. Em outras palavras, o \textit{Lecture Move} corresponde a uma combinação de \textit{Move} e \textit{Swap}. 
+
+No Algoritmo \ref{algo_lm} é apresentado o pseudocódigo do movimento \textit{Lecture Move}.
+
+
+\begin{algorithm}[H]
+\SetKwInput{Entrada}{Entrada}
+\SetKwInput{Saida}{Saída}
+\SetKwInput{Dados}{Dados}
+\SetKwInput{Resultado}{Resultado}
+\SetKwBlock{Inicio}{início}{fim}
+\SetKwIF{Se}{SenaoSe}{Senao}{se}{então}{senão\ se}{senão}{fim\ se}
+\SetKwFor{Para}{para}{faça}{fim\ para}
+\SetKwFor{ParaPar}{para}{faça em paralelo}{fim-para}
+\SetKwFor{ParaCada}{para cada}{faça}{fim\ para\ cada}
+\SetKwFor{ParaTodo}{para todo}{faça}{fim\ para\ todo}
+\SetKwFor{Enqto}{enquanto}{faça}{fim\ enquanto}
+\SetKwRepeat{Repita}{repita}{até}
+
+\Entrada {Solução \(S\)}
+\Saida{Solução \(S^{Vizinha}\)}
+\Inicio{
+    \(Trocou \gets false\)\;
+    \Enqto{\textit{não Trocou}}{
+        Escolhe aleatoriamente posição 1 (p1)\;
+        Escolhe aleatoriamente posição 2 (p2)\;
+        \uSe{p1 possui oferta alocada \textbf{E} p2 possui oferta alocada}{
+            \(S^{Vizinha} \gets Swap(S, p1, p2)\)\;
+            \(Trocou \gets true\)\;
+        }
+        \uSenaoSe{p1 possui oferta alocada \textbf{E} p2 NÃO possui oferta alocada}{
+            \(S^{Vizinha} \gets Move(S, p1, p2)\)\;
+            \(Trocou \gets true\)\;
+        }
+        \uSenaoSe{p1 NÃO possui oferta alocada \textbf{E} p2 possui oferta alocada}{
+            \(S^{Vizinha} \gets Move(S, p2, p1)\)\;
+            \(Trocou \gets true\)\;
+        }
+    }
+}
+\caption{Algoritmo do \textit{Lecture Move}}
+\label{algo_lm}
+\end{algorithm}
+
+% \section{Critérios de parada e Aceitação}
+% \label{sec-met-parada}
+
+% Para o critério de aceitação do \textit{Simulated Annealing}, dada uma solução \(S\), uma solução vizinha \(S'\) é aceita se \(f(S') < f(S)\). A \(S'\) também pode ser aceita caso \(f(S') \geq f(S)\), mas apenas com uma probabilidade de aceitação \(e^{-\Delta f/t}\). A temperatura \(T\) inicia com um valor é multiplicada por \(\beta\) a cada iteração, sendo \(\beta \in [0, 1]\) a taxa de resfriamento.
+
+% Os valores de \(T_i,\ T_f,\ \beta,\ N_v\) foram calibrados durante os experimentos. É estipulado um intervalo de tempo que é iniciado sempre que uma iteração começa, e a cada solução vizinha gerada que melhore a função objetivo, este contador de tempo é zerado, para que possíveis novos vizinhos possam ser gerados na mesma iteração, ocasionando novas melhoras. Caso o tempo limite seja alcançado sem nenhuma melhora, a busca local avança para uma nova iteração.
