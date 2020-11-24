@@ -8,7 +8,7 @@ Nesse capítulo é apresentada a metodologia proposta para o desenvolvimento des
 
 \section{Modelagem do Problema}
 \label{sec-met-modelagem}
-A modelagem usada para representar o PTHU do DCOMP-CCENS-UFES foi baseada nos trabalhos de \citeonline{mariano2014alns} e \citeonline{vital2015grasp}, além das instâncias que estes trabalhos utilizaram. O problema é modelado com estruturas definidas pelo identificador de cada elemento relevante e das características seguintes ao identificador.
+A modelagem usada para representar o PTHU do DCOMP-CCENS-UFES foi baseada nos trabalhos de \citeonline{mariano2014alns} e \citeonline{vital2015grasp}, bem como as instâncias que estes trabalhos utilizaram (2013/2 e 2016/1). O problema é modelado com estruturas definidas pelo identificador de cada elemento relevante e das características seguintes ao identificador.
 
 As estruturas são armazenadas em vetores que possibilitam estabelecer as relações entre os conjuntos de elementos que são trabalhados. Desse modo, as estruturas mais simples são: salas, professores, disciplinas, turmas e horários. Além dessas, é estabelecida uma estrutura denominada oferta, que promove a relação entre todas as outras. O levantamento de todas as entidades que referem-se aos períodos 2013/2 e 2016/1, usados nos testes deste trabalho, constam no Apêndice \ref{ap-dados}.
 
@@ -102,7 +102,7 @@ Com todos os dados armazenados nas estruturas previamente definidas, o algoritmo
 
 Nas Tabelas \ref{tbl_ofertas}, \ref{tbl_prof} e \ref{tbl_alocadas} são apresentadas como as tabelas-horário, respectivamente, de uma sala, de um professor e uma turma são representadas. As células que possuem número positivos (destaque em cinza) são aquelas com ofertas alocadas. Esses números representam o identificador da oferta ali alocada.
 
-\begin{table}
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -127,7 +127,7 @@ Nas Tabelas \ref{tbl_ofertas}, \ref{tbl_prof} e \ref{tbl_alocadas} são apresent
 \label{tbl_ofertas}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -291,7 +291,7 @@ A partir disso, uma lista de ofertas, contendo todas as ofertas, é criada. Essa
 
 A LC possui a posição em que a simulação de alocação foi efetuada e seu custo de alocação. A LC serve de base para a formação de uma outra lista, denominada Lista Restrita de Candidatos (LRC), que é composta por um intervalo da LC, depois dela ter sido ordenada crescentemente pelo custo de alocação das simulações. Esse intervalo é definido de acordo com o fator de aleatoriedade \(\alpha\) da seguinte forma: \([ c^{min}, c^{min} + \alpha(c^{max} - c^{min})]\) em que \(c^{min}\) representa o menor custo de alocação, \(c^{max}\) representa o maior custo de alocação, e \(\alpha \in [0,1]\).
 
-Quando \(\alpha = 1\), LC tem seu elementos totalmente selecionados para LRC, se \(\alpha = 0\), LRC é preenchida somente com o primeiro elemento de LC. Um horário é escolhido de LRC aleatoriamente e a oferta é acrescentada à solução. É importante destacar que quando \(\alpha = 1\) a escolha do horário é feita de maneira totalmente aleatória, caso \(\alpha = 0\), o horário de LC que possui o menor custo será sempre escolhido, o que representa o uma escolha totalmente gulosa.
+Quando \(\alpha = 1\), LC tem seu elementos totalmente selecionados para LRC, se \(\alpha = 0\), LRC é preenchida somente com o primeiro elemento de LC. Um horário é escolhido de LRC aleatoriamente e a oferta é acrescentada à solução. É importante destacar que quando \(\alpha = 1\) a escolha do horário é feita de maneira totalmente aleatória, caso \(\alpha = 0\), o horário de LC que possui o menor custo será sempre escolhido, o que representa uma escolha totalmente gulosa.
 
 Após a alocação da oferta, ela é removida da lista de ofertas e o procedimento é repetido até que todas as ofertas sejam alocadas. Portanto, a construção da solução inicial termina quando todas as ofertas estiverem inseridas na tabela-horário.
 

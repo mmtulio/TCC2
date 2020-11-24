@@ -5,14 +5,14 @@
 \chapter{Resultados Computacionais}
 \label{sec-resultados}
 
-Este capítulo apresenta os experimentos computacionais e os resultados alcançados neste trabalho, constando as análises comparativas com outro trabalho na literatura, bem como as soluções manuais elaboradas pelos coordenadores de curso do DCOMP-CCENS-UFES. Mostra também as escolhas dos parâmetros do GRASP, os parâmetros específicos da busca local \textit{Simulated Annealing} e os movimentos utilizados para a geração de soluções vizinhas.
+Este capítulo apresenta os experimentos computacionais e os resultados alcançados neste trabalho, constando as análises comparativas com outro trabalho, bem como as soluções manuais elaboradas pelos coordenadores de curso do DCOMP-CCENS-UFES. Mostra também as escolhas dos parâmetros do GRASP, os parâmetros específicos da busca local \textit{Simulated Annealing} e os movimentos utilizados para a geração de soluções vizinhas.
 
 \section{Escolha de Parâmetros}
 \label{sec-res-param}
 
 O algoritmo GRASP possui dois parâmetros: o número máximo de iterações \(Max_{Iter}\) e o valor \(\alpha\), que define a forma como a construção da solução inicial será conduzida. Se o parâmetro \(\alpha\) tem seu valor muito próximo a 0 (zero), o algoritmo de construção inicial tem comportamento predominantemente guloso, e produz soluções de boa qualidade, porém pouco diversificadas. Caso \(\alpha\) é mais próximo de 1 (um), as soluções possuem características mais aleatórias, porém com a desvantagem de possuir um valor de função objetivo mais alto. Para o fator de aleatoriedade \(\alpha\) foram escolhidos 5 valores distintos: 0, 0.25, 0.5, 0.75 e 1, para serem usados nos experimentos. Além desses valores, em uma das execuções do GRASP o valor usado não foi fixo, ou seja, em cada iteração um valor aleatório de \(\alpha\) no intervalo [0,1] é escolhido e usado. Para efeitos de comparação com o trabalho de \citeonline{vital2015grasp}, o valor de  \(\alpha = 0.15\) também foi testado. E da mesma forma também que \citeonline{vital2015grasp}, o parâmetro \(Max_{Iter}\) foi definido pelo tempo de execução: 500 segundos. 
 
-Para o \textit{Simulated Annealing}, os parâmetros foram calibrados de forma a permitir um certo grau de diversificação no início da busca e maior intensificação no final do processo. Para cada valor de \(\alpha\) e para cada instância (2013/2 e 2016/1) o \textit{SA} foi testado com dois conjuntos de movimentos: \textit{Move} e \textit{Swap} com 50\% de probabilidade cada e \textit{Lecture Move}.
+Para o \textit{Simulated Annealing}, os parâmetros foram calibrados de forma a permitir um certo grau de diversificação no início da busca e maior intensificação no final do processo. Para cada valor de \(\alpha\) e para cada instância (2013/2 e 2016/1) o \textit{SA} foi testado com dois conjuntos de movimentos: \textit{Move} e \textit{Swap}, estes, com 50\% de probabilidade cada e \textit{Lecture Move}.
 
 Na tabela \ref{tbl_param} são apresentados os parâmetros definidos durante a calibração para o algoritmo SA.
 
@@ -71,11 +71,11 @@ As ofertas das disciplinas \textit{Trabalho de Conclusão de Curso I}, \textit{T
 \section{Análise dos Resultados}
 \label{sec-res-anal}
 
-O algoritmo foi executado 10 vezes para cada instância (2013/2 e 2016/1), para cada valor de \(\alpha\) (0, 0.15, 0.25. 0.5, 0.75, 1 e Aleatório) e para cada conjunto de movimentos da busca local (\textit{Move}/\textit{Swap} e \textit{Lecture Move}). Ao final das execuções, todas as soluções obtidas apresentaram-se viáveis, ou seja, não violaram nenhuma restrição forte para o problema.
+O algoritmo foi executado 10 vezes para cada instância (2013/2 e 2016/1), para cada valor de \(\alpha\) (0, 0.15, 0.25. 0.5, 0.75, 1 e Aleatório) e para cada conjunto de movimentos da busca local (\textit{Move}/\textit{Swap} e \textit{Lecture Move}). Ao final das execuções, todas as soluções obtidas apresentaram-se viáveis, ou seja, não violaram nenhuma restrição forte para o problema. É importante notar que, apesar da execução ocorrer até \(Max_{Iter}\), os tempos exibidos são os tempos em que foi alcançada a melhor solução.
 
 Nas Tabelas \ref{tbl_resultados_alfa152013} e \ref{tbl_resultados_alfa152016}, pode-se verificar que, mantendo \(\alpha = 0.15\), mesmo valor usado por \citeonline{vital2015grasp}, para ambos os semestres, a solução com o movimento \textit{Lecture Move} apresentou melhores resultados. Para 2013/2, a média dos resultados foi \(18,37\%\) melhor do que a solução com os movimentos \textit{Move/Swap}, enquanto para o semestre 2016/1, a melhora foi de \(20,08\%\).
 
-A melhoria da solução com o \textit{Lecture Move} em relação ao  \textit{Move/Swap} pode ser explicada pela eliminação da escolha aleatória de qual movimento seria realizado. Com a introdução do \textit{Lecture Move}, primeiro são escolhidos os horários, se os 2 horários escolhidos já possuem aulas alocadas, tenta-se realizar o \textit{Swap}, mas se somente um horário já está alocado, tenta-se fazer o \textit{Move}.
+A melhoria da solução com o \textit{Lecture Move} em relação ao  \textit{Move/Swap} pode ser explicada pela eliminação da escolha aleatória de qual movimento seria realizado. Com a introdução do \textit{Lecture Move}, primeiro são escolhidos os horários, se os dois horários escolhidos já possuem aulas alocadas, tenta-se realizar o \textit{Swap}, mas se somente um horário já está alocado, tenta-se fazer o \textit{Move}.
 
 \begin{table}[!htbp]
 \centering
@@ -106,7 +106,7 @@ Tempo & 231,525 & 301,577 \\ \hline
 
 Na Tabela \ref{tbl_resultados_tulio} são mostrados as melhores resultados, a média dos valores e a média de tempo utilizando o movimento de busca local \textit{Lecture Move} e variando o valor de \(\alpha\). Pode-se observar que a melhor média de soluções para o semestre 2013/2 foi obtida com \(\alpha\) = 0, com a média dos resultados de 320,8, enquanto que para 2016/1 foi com \(\alpha\) = 0.75, com a média dos resultados de 233,4.
 
-Para o semestre 2013/2, a melhor solução encontrada possui  \(\alpha\) = 0, isso significa que uma estratégia totalmente gulosa foi melhor aproveitada para essa instância.
+Para o semestre 2013/2, a melhor solução encontrada foi com  \(\alpha\) = 0, isso significa que uma estratégia totalmente gulosa foi melhor aproveitada para essa instância.
 Já para o semestre 2016/1, com a melhor solução possuindo  \(\alpha\) = 0.75, percebe-se que uma maior aleatoriedade foi mais benéfica para essa instância.
 
 \begin{table}[!htbp]
